@@ -7,7 +7,7 @@ def dev():
     response = get('https://quantbet.com/quiz/dev')
     numbers = response.text.split('strong>')
     data = {'divisor': gcd(int(numbers[1][:-2]), int(numbers[3][:-2]))}
-    print(post('https://quantbet.com/submit', data=data, cookies=response.cookies).text.split('div>')[4][:-2])
+    print(post('https://quantbet.com/submit', data=data, cookies=response.cookies).text.split('div>')[5][:-2])
 
 
 def quant():
@@ -24,7 +24,7 @@ def quant():
     for n in range(100):
         g += 20 * 2 ** n * a ** (n + 5) * (1 - a) ** (n + 3)
     data = {'answer': c * g ** aa * (1 - g) ** bb}
-    print(post('https://quantbet.com/submitQuant', data=data, cookies=response.cookies).text.split('div>')[4][:-2])
+    print(post('https://quantbet.com/submitQuant', data=data, cookies=response.cookies).text.split('div>')[5][:-2])
 
 
 if __name__ == '__main__':
