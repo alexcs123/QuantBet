@@ -31,7 +31,7 @@ c = comb(sum(s) - 1, min(s)) if sum(s) < 12 else (252 if sum(s) == 12 else 504)
 could be simplified to:
 
 ```python
-c = comb(sum(s) - 1, min(s)) if sum(s) < 12 else 252
+c = comb(sum(s) - 1, min(s)) if sum(s) != 12 else 252
 ```
 
 however it will remain for the sake of correctness, in the event that
