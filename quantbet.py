@@ -12,18 +12,9 @@ def dev():
 
 def quant():
     response = get('https://quantbet.com/quiz/quant')
-    a = float(response.text.split('point is ')[1][:4])
-    aa = int(response.text.split('the set ')[1][0])
-    bb = int(response.text.split('the set ')[1][2])
-    c = comb(aa + bb - 1, min(aa, bb))
-    if aa + bb == 12:
-        c = 252
-    elif aa + bb == 13:  # tiebreak never happens
-        c = 504
-    g = a ** 4 * (1 + 4 * (1 - a) + 10 * (1 - a) ** 2)
-    for n in range(100):
-        g += 20 * 2 ** n * a ** (n + 5) * (1 - a) ** (n + 3)
-    data = {'answer': c * g ** aa * (1 - g) ** bb}
+    p, s = float(response.text.split('point is ')[1][:4]), [int(n) for n in response.text.split('the set ')[1][0:3:2]]
+    g = p ** 4 * (1 + 4 * (1 - p) + 10 * (1 - p) ** 2) + sum([20 * 2 ** n * p ** (n + 5) * (1 - p) ** (n + 3) for n in range(100)])
+    data = {'answer': (comb(sum(s) - 1, min(s)) if sum(s) < 12 else 252) * g ** s[0] * (1 - g) ** s[1]}
     print(post('https://quantbet.com/submitQuant', data=data, cookies=response.cookies).text.split('div>')[5][:-2])
 
 
