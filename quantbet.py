@@ -12,9 +12,11 @@ def dev():
 
 def quant():
     response = get('https://quantbet.com/quiz/quant')
-    p, s = float(response.text.split('point is ')[1][:4]), [int(n) for n in response.text.split('the set ')[1][0:3:2]]
+    p = float(response.text.split('point is ')[1][:4])
+    s = [int(n) for n in response.text.split('the set ')[1][0:3:2]]
+    c = comb(sum(s) - 1, min(s)) if sum(s) < 12 else (252 if sum(s) == 12 else 504)  # tie-break never happens
     g = p ** 4 * (1 + 4 * (1 - p) + 10 * (1 - p) ** 2) + sum([20 * 2 ** n * p ** (n + 5) * (1 - p) ** (n + 3) for n in range(100)])
-    data = {'answer': (comb(sum(s) - 1, min(s)) if sum(s) < 12 else 252) * g ** s[0] * (1 - g) ** s[1]}
+    data = {'answer': c * g ** s[0] * (1 - g) ** s[1]}
     print(post('https://quantbet.com/submitQuant', data=data, cookies=response.cookies).text.split('div>')[5][:-2])
 
 
