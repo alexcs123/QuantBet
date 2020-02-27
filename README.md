@@ -6,7 +6,7 @@ scientist role ([quant]). When completed successfully, the following should be
 printed:
 
 > Correct! Please send your solution along with a copy of your CV to
-> careers@quantbet.com
+> careers@quantbet&#46;com
 
 Seeing this message relies on the markup of the result page remaining constant,
 but the underlying solution should still be correct.
